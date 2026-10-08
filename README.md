@@ -1,6 +1,6 @@
 # 🎣 RodLink - Fishing Rod Link Plugin
 
-![StasisRod Banner](https://img.shields.io/badge/StasisRod-v1.0.0-blue?style=for-the-badge&logo=java)
+![RodLink Banner](https://img.shields.io/badge/RodLink-v1.0.0-blue?style=for-the-badge&logo=java)
 ![Paper](https://img.shields.io/badge/Paper-26.2-red?style=for-the-badge&logo=apachekafka)
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)
 ![Open Source](https://img.shields.io/badge/Open%20Source-Weißer%20Code-white?style=for-the-badge&logo=github)
@@ -22,7 +22,7 @@
 
 ## 📖 Übersicht
 
-**StasisRod** ist ein Paper-Plugin für Minecraft 1.20.6+, das Spielern ermöglicht, Angelruten mit Druckplatten zu verlinken. Diese Verlinkung erzeugt ein **dauerhaftes Redstone-Signal** (Signalstärke 15) an der Druckplatte – unabhängig davon, ob jemand darauf steht.
+**RodLink** ist ein Paper-Plugin für Minecraft 1.20.6+, das Spielern ermöglicht, Angelruten mit Druckplatten zu verlinken. Diese Verlinkung erzeugt ein **dauerhaftes Redstone-Signal** (Signalstärke 15) an der Druckplatte – unabhängig davon, ob jemand darauf steht.
 
 Damit eröffnen sich völlig neue Möglichkeiten für:
 
@@ -89,7 +89,7 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 
 2. **Installation**
    ```
-   plugins/StasisRod.jar → in den plugins/ Ordner kopieren
+   plugins/RodLink.jar → in den plugins/ Ordner kopieren
    ```
 
 3. **Server starten**
@@ -100,7 +100,7 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 
 4. **Konfiguration anpassen** (optional)
    ```
-   plugins/StasisRod/config.yml
+   plugins/RodLink/config.yml
    ```
 
 5. **Fertig!**
@@ -163,11 +163,11 @@ Schritt 3: Verlinke normal
 
 ## ⚙️ Konfiguration
 
-**Datei:** `plugins/StasisRod/config.yml`
+**Datei:** `plugins/RodLink/config.yml`
 
 ```yaml
 # ═══════════════════════════════════════════════
-# 🎣 StasisRod Plugin Konfiguration
+# 🎣 RodLink Plugin Konfiguration
 # ═══════════════════════════════════════════════
 
 # 🐛 Debug-Modus für Konsolen-Ausgaben
@@ -333,12 +333,12 @@ Angelrute "Stasis" auf Druckplatte werfen
 
 <div align="center">
 
-### 🎣 Viel Spaß mit StasisRod! ✨
+### 🎣 Viel Spaß mit RodLink! ✨
 
 ![Made with Java](https://img.shields.io/badge/Made%20with-Java-orange?style=flat-square)
 ![Paper API](https://img.shields.io/badge/Paper-API-red?style=flat-square)
 ![Minecraft](https://img.shields.io/badge/Minecraft-26.2-green?style=flat-square)
 
-**[⬆ Nach oben](#-stasisrod---fishing-rod-link-plugin)**
+**[⬆ Nach oben](#-RodLink---fishing-rod-link-plugin)**
 
 </div>
