@@ -1,1 +1,18 @@
 
+# StasisRod Plugin Konfiguration
+
+# Entwickler-Debug-Modus für detaillierte Konsolen-Ausgaben
+debug: false
+
+# Haltbarkeits-Abzug nach normaler Entlinkung (Mehrweg-Angel)
+durability_penalty: 10
+
+# Partikel-Einstellungen
+particles:
+  enabled: true
+  radius: 10.0
+
+# System-Nachrichten (MiniMessage-Format)
+messages:
+  linked_success: "<green>[Stasis] Druckplatte erfolgreich verlinkt!"
+  link_broken: "<red>[Stasis] Verlinkung wurde getrennt (Ziel nicht gefunden)."
