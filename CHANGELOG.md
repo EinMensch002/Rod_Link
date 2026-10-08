@@ -1,4 +1,4 @@
-# Changelog - StasisRod
+# Changelog - RodLink
 
 Alle nennenswerten Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
