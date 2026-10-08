@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.example.plugin</groupId>
-    <artifactId>StasisRod</artifactId>
+    <artifactId>RodLink</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>StasisRod</name>
+    <name>RodLink</name>
     <description>Verlinkt Angelruten mit Redstone-Druckplatten</description>
 
     <properties>
