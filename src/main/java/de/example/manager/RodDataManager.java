@@ -49,7 +49,7 @@ public class RodDataManager {
         /**
          * Konvertiert die PDC-Koordinaten wieder in ein Bukkit Location-Objekt.
          */
-        @Nullable,
+        @Nullable
         public Location toLocation() {
             World world = Bukkit.getWorld(worldUuid);
             return world != null ? new Location(world, x, y, z) : null;
