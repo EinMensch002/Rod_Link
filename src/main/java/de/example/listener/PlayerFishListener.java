@@ -242,11 +242,6 @@ public class PlayerFishListener implements Listener {
             return null;
         }
 
-        Block hooked = hook.getHookedBlock();
-        if (hooked != null && hooked.getBlockData() instanceof Powerable) {
-            return hooked;
-        }
-
         Location loc = hook.getLocation();
         Block atLoc = loc.getBlock();
         if (atLoc.getBlockData() instanceof Powerable) {

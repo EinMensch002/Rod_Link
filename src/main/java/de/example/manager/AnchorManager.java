@@ -72,7 +72,7 @@ public class AnchorManager {
         }
 
         // 2. Fallback: Chunk-Ladestatus prüfen & Umkreissuche durchführen
-        if (!world.isChunkLoaded(location)) {
+        if (!world.isChunkLoaded(location.getChunk())) {
             debugLog("Chunk an " + location + " ist aktuell nicht geladen. Entfernung übersprungen.");
             return;
         }

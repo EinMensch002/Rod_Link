@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -69,13 +70,13 @@ public class RodDataManager {
             return;
         }
 
-        rod.editPersistentDataContainer(pdc -> {
-            pdc.set(keyWorldUuid, PersistentDataType.STRING, location.getWorld().getUID().toString());
-            pdc.set(keyX, PersistentDataType.DOUBLE, location.getX());
-            pdc.set(keyY, PersistentDataType.DOUBLE, location.getY());
-            pdc.set(keyZ, PersistentDataType.DOUBLE, location.getZ());
-            pdc.set(keyArmorStandUuid, PersistentDataType.STRING, armorStandUuid.toString());
-            pdc.set(keySingleUse, PersistentDataType.BOOLEAN, isSingleUse);
+        rod.editMeta(meta -> {
+            meta.getPersistentDataContainer().set(keyWorldUuid, PersistentDataType.STRING, location.getWorld().getUID().toString());
+            meta.getPersistentDataContainer().set(keyX, PersistentDataType.DOUBLE, location.getX());
+            meta.getPersistentDataContainer().set(keyY, PersistentDataType.DOUBLE, location.getY());
+            meta.getPersistentDataContainer().set(keyZ, PersistentDataType.DOUBLE, location.getZ());
+            meta.getPersistentDataContainer().set(keyArmorStandUuid, PersistentDataType.STRING, armorStandUuid.toString());
+            meta.getPersistentDataContainer().set(keySingleUse, PersistentDataType.BOOLEAN, isSingleUse);
         });
     }
 
@@ -89,7 +90,12 @@ public class RodDataManager {
             return Optional.empty();
         }
 
-        var pdc = rod.getPersistentDataContainer();
+        ItemMeta meta = rod.getItemMeta();
+        if (meta == null) {
+            return Optional.empty();
+        }
+
+        var pdc = meta.getPersistentDataContainer();
 
         String worldUuidStr = pdc.get(keyWorldUuid, PersistentDataType.STRING);
         Double x = pdc.get(keyX, PersistentDataType.DOUBLE);
@@ -118,7 +124,8 @@ public class RodDataManager {
         if (rod.getType().isAir()) {
             return false;
         }
-        return rod.getPersistentDataContainer().has(keyArmorStandUuid, PersistentDataType.STRING);
+        ItemMeta meta = rod.getItemMeta();
+        return meta != null && meta.getPersistentDataContainer().has(keyArmorStandUuid, PersistentDataType.STRING);
     }
 
     /**
@@ -129,13 +136,13 @@ public class RodDataManager {
             return;
         }
 
-        rod.editPersistentDataContainer(pdc -> {
-            pdc.remove(keyWorldUuid);
-            pdc.remove(keyX);
-            pdc.remove(keyY);
-            pdc.remove(keyZ);
-            pdc.remove(keyArmorStandUuid);
-            pdc.remove(keySingleUse);
+        rod.editMeta(meta -> {
+            meta.getPersistentDataContainer().remove(keyWorldUuid);
+            meta.getPersistentDataContainer().remove(keyX);
+            meta.getPersistentDataContainer().remove(keyY);
+            meta.getPersistentDataContainer().remove(keyZ);
+            meta.getPersistentDataContainer().remove(keyArmorStandUuid);
+            meta.getPersistentDataContainer().remove(keySingleUse);
         });
     }
 }
