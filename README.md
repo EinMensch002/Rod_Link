@@ -1,7 +1,7 @@
 # 🎣 StasisRod - Fishing Rod Link Plugin
 
 ![StasisRod Banner](https://img.shields.io/badge/StasisRod-v1.0.0-blue?style=for-the-badge&logo=java)
-![Paper](https://img.shields.io/badge/Paper-1.20.2-red?style=for-the-badge&logo=apachekafka)
+![Paper](https://img.shields.io/badge/Paper-26.2-red?style=for-the-badge&logo=apachekafka)
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)
 ![Open Source](https://img.shields.io/badge/Open%20Source-Weißer%20Code-white?style=for-the-badge&logo=github)
 
@@ -22,7 +22,7 @@
 
 ## 📖 Übersicht
 
-**StasisRod** ist ein Paper-Plugin für Minecraft 1.20.2+, das Spielern ermöglicht, Angelruten mit Druckplatten zu verlinken. Diese Verlinkung erzeugt ein **dauerhaftes Redstone-Signal** (Signalstärke 15) an der Druckplatte – unabhängig davon, ob jemand darauf steht.
+**StasisRod** ist ein Paper-Plugin für Minecraft 1.20.6+, das Spielern ermöglicht, Angelruten mit Druckplatten zu verlinken. Diese Verlinkung erzeugt ein **dauerhaftes Redstone-Signal** (Signalstärke 15) an der Druckplatte – unabhängig davon, ob jemand darauf steht.
 
 Damit eröffnen sich völlig neue Möglichkeiten für:
 
@@ -78,8 +78,8 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 ## 🚀 Installation
 
 ### ✅ Anforderungen
-- **Minecraft Server**: Paper 1.20.2+
-  - ⚠️ Getestet auf **Paper 1.20.2** - Kompatibilität mit älteren Versionen nicht garantiert
+- **Minecraft Server**: Paper 1.20.6+
+  - ⚠️ Getestet auf **Paper 26.2** - Kompatibilität mit älteren Versionen nicht garantiert
 - **Java**: 21 (empfohlen)
 
 ### 📦 Schritt-für-Schritt
@@ -129,11 +129,11 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 
 ```
 Schritt 1: Benenne die Rute um
-  → Am Amboss oder mit /rename
+  → Am Amboss
 
-Schritt 2: Name muss [1] enthalten
-  → Format: [1] Ruten Name
-  → Beispiel: [1] Einweg-Spezial
+Schritt 2: Name muss mit [1] enden
+  → Format: Ruten Name [1] 
+  → Beispiel: Einweg-Spezial[1]
 
 Schritt 3: Verlinke normal
   → Nach Nutzung wird die Rute zerstört
@@ -224,11 +224,11 @@ RodDataManager  PressurePlateManager  AnchorManager
 
 | Version | Status | Getestet | Notizen |
 |---------|--------|----------|---------|
-| **Paper 1.20.2** | ✅ Stabil | Ja | Vollständig kompatibel |
+| **Paper 26.2** | ✅ Stabil | Ja | Vollständig kompatibel |
 | **Ältere Versionen** | ❌ Nicht getestet | Nein | Kompatibilität nicht garantiert |
 | **Java 21** | ✅ Empfohlen | Ja | Compilation erfolgreich |
 
-> ⚠️ **Wichtig**: Das Plugin wurde auf **Paper 1.20.2** entwickelt und getestet. Kompatibilität mit älteren Versionen ist **nicht garantiert**. Bitte testet das Plugin in eurer Umgebung.
+> ⚠️ **Wichtig**: Das Plugin wurde auf **Paper 26.2** entwickelt und getestet. Kompatibilität mit älteren Versionen ist **nicht garantiert**. Bitte testet das Plugin in eurer Umgebung.
 
 ---
 
@@ -268,8 +268,6 @@ Angelrute "Stasis" auf Druckplatte werfen
     Redstone-Signal triggert Enderperle-Dispenser
                     ↓
     Spieler wird beim Zurückziehen teleportiert
-                    ↓
-              Innovative Mechanik! 🌀
 ```
 
 **Anwendung**: Quest-basierte Teleportation, Map-Challenges, Event-Trigger
@@ -278,7 +276,7 @@ Angelrute "Stasis" auf Druckplatte werfen
 
 ### 🚪 Beispiel 2: Tür-Auslösung via Angel-Mechanik
 ```
-[1] Quest-Angel auf Druckplatte werfen
+[1]     Angel auf Druckplatte werfen
                     ↓
         Zurückziehen = Tür öffnet sich
                     ↓
@@ -339,7 +337,7 @@ Angelrute "Stasis" auf Druckplatte werfen
 
 ![Made with Java](https://img.shields.io/badge/Made%20with-Java-orange?style=flat-square)
 ![Paper API](https://img.shields.io/badge/Paper-API-red?style=flat-square)
-![Minecraft](https://img.shields.io/badge/Minecraft-1.20.2-green?style=flat-square)
+![Minecraft](https://img.shields.io/badge/Minecraft-26.2-green?style=flat-square)
 
 **[⬆ Nach oben](#-stasisrod---fishing-rod-link-plugin)**
 
