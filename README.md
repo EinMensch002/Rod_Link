@@ -326,7 +326,7 @@ Angelrute "Stasis" auf Druckplatte werfen
 
 ![Development](https://img.shields.io/badge/Status-Stable-brightgreen?style=flat-square)
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)
-![Tested On](https://img.shields.io/badge/Tested%20On-Paper%201.20.2-green?style=flat-square)
+![Tested On](https://img.shields.io/badge/Tested%20On-Paper%2026.2-green?style=flat-square)
 ![Open Source](https://img.shields.io/badge/Open%20Source-Weißer%20Code-white?style=flat-square)
 
 ---
