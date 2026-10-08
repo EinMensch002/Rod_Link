@@ -4,7 +4,7 @@ Alle nennenswerten Änderungen an diesem Projekt werden in dieser Datei dokument
 
 ---
 
-## [1.0.0] - 2024 (Initial Release)
+## [1.0.0] - 2026 (Initial Release)
 
 ### ✨ Features
 - 🎣 **Angelruten-Verlinkung**: Werfe Angelruten auf Druckplatten zum Verlinken
