@@ -1,9 +1,9 @@
 # 🎣 StasisRod - Fishing Rod Link Plugin
 
 ![StasisRod Banner](https://img.shields.io/badge/StasisRod-v1.0.0-blue?style=for-the-badge&logo=java)
-![Paper](https://img.shields.io/badge/Paper-1.20+-red?style=for-the-badge&logo=apachekafka)
+![Paper](https://img.shields.io/badge/Paper-1.20.2-red?style=for-the-badge&logo=apachekafka)
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Open Source](https://img.shields.io/badge/Open%20Source-Weißer%20Code-white?style=for-the-badge&logo=github)
 
 > **Ein innovatives Minecraft Paper-Plugin, das Angelruten mit Redstone-Druckplatten verbindet und intelligent verwaltet.**
 
@@ -22,7 +22,7 @@
 
 ## 📖 Übersicht
 
-**StasisRod** ist ein Paper-Plugin für Minecraft 1.20+, das Spielern ermöglicht, Angelruten mit Druckplatten zu verlinken. Diese Verlinkung erzeugt ein **dauerhaftes Redstone-Signal** (Signalstärke 15) an der Druckplatte – unabhängig davon, ob jemand darauf steht.
+**StasisRod** ist ein Paper-Plugin für Minecraft 1.20.2+, das Spielern ermöglicht, Angelruten mit Druckplatten zu verlinken. Diese Verlinkung erzeugt ein **dauerhaftes Redstone-Signal** (Signalstärke 15) an der Druckplatte – unabhängig davon, ob jemand darauf steht.
 
 Damit eröffnen sich völlig neue Möglichkeiten für:
 
@@ -37,13 +37,15 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 
 ### 🎣 **Verlinkung**
 - Werfe eine Angelrute einfach auf eine beliebige Druckplatte
-- Automatische Verlinkung beim Haken-Kontakt
+- Der Haken muss die Platte berühren
+- **Wichtig**: Die Verlinkung findet erst statt, wenn du die Angel **zurückziehst** (rechtsklick)
 - Unsichtbare Anker-ArmorStands markieren die Position
 
 ### 🔌 **Dauerhaftes Signal**
 - Redstone-Signalstärke **15** bleibt permanent erhalten
 - Unabhängig von Entity-Gewicht oder Aktivität
 - Perfekt für zuverlässige Maschinen
+- Funktioniert auch in nicht geladenen Chunks dank Lazy Loading
 
 ### 💧 **Visuelle Effekte**
 - Shimmer-Partikeleffekte an verlinkten Platten
@@ -76,9 +78,9 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 ## 🚀 Installation
 
 ### ✅ Anforderungen
-- **Minecraft Server**: Paper 1.20+
+- **Minecraft Server**: Paper 1.20.2+
+  - ⚠️ Getestet auf **Paper 1.20.2** - Kompatibilität mit älteren Versionen nicht garantiert
 - **Java**: 21 (empfohlen)
-  - ℹ️ *Kompatibilität mit älteren Java-Versionen wird derzeit überprüft*
 
 ### 📦 Schritt-für-Schritt
 
@@ -108,15 +110,19 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 
 ## 🎮 Bedienung
 
-### 🎯 Rute mit Druckplatte verlinken
+### 🎣 Rute mit Druckplatte verlinken
+
+**Wichtig: Das Verlinken erfolgt beim Zurückziehen der Angel!**
 
 ```
 1. Nimm eine Angelrute in die Hand
 2. Wirf die Rute auf eine beliebige Druckplatte
-3. Sobald der Haken die Platte berührt
-   ✅ Automatische Verlinkung
+3. Der Haken muss die Platte berühren
+4. Ziehe die Angel zurück (Rechtsklick halten)
+   ✅ Verlinkung wird aktiviert
    ✅ Bestätigungsnachricht
    ✅ Partikeleffekte (optional)
+   ✅ Signalstärke 15 wird erteilt
 ```
 
 ### 🔥 Single-Use Ruten erstellen
@@ -218,11 +224,11 @@ RodDataManager  PressurePlateManager  AnchorManager
 
 | Version | Status | Getestet | Notizen |
 |---------|--------|----------|---------|
-| **Paper 1.20.x** | ✅ Stabil | Ja (1.20.1) | Vollständig kompatibel |
+| **Paper 1.20.2** | ✅ Stabil | Ja | Vollständig kompatibel |
+| **Ältere Versionen** | ❌ Nicht getestet | Nein | Kompatibilität nicht garantiert |
 | **Java 21** | ✅ Empfohlen | Ja | Compilation erfolgreich |
-| Ältere Java-Versionen | ⏳ Prüfung | - | Unterstützung wird überprüft |
 
-> ℹ️ Das Plugin wurde auf **Paper 1.20.2** entwickelt und getestet. Kompatibilität mit älteren Versionen wird derzeit evaluiert.
+> ⚠️ **Wichtig**: Das Plugin wurde auf **Paper 1.20.2** entwickelt und getestet. Kompatibilität mit älteren Versionen ist **nicht garantiert**. Bitte testet das Plugin in eurer Umgebung.
 
 ---
 
@@ -251,6 +257,42 @@ RodDataManager  PressurePlateManager  AnchorManager
 
 ---
 
+## 🎮 Gameplay-Beispiele
+
+### 📍 Beispiel 1: Stasis-Teleport mit Enderperle
+```
+Angelrute "Stasis" auf Druckplatte werfen
+                    ↓
+        Zurückziehen = Verlinkung aktiv
+                    ↓
+    Redstone-Signal triggert Enderperle-Dispenser
+                    ↓
+    Spieler wird beim Zurückziehen teleportiert
+                    ↓
+              Innovative Mechanik! 🌀
+```
+
+**Anwendung**: Quest-basierte Teleportation, Map-Challenges, Event-Trigger
+
+---
+
+### 🚪 Beispiel 2: Tür-Auslösung via Angel-Mechanik
+```
+[1] Quest-Angel auf Druckplatte werfen
+                    ↓
+        Zurückziehen = Tür öffnet sich
+                    ↓
+          Redstone-Signal aktiviert
+                    ↓
+      Pistolenschussventil öffnet Tür
+                    ↓
+            Rute wird zerstört
+```
+
+**Anwendung**: Adventure-Maps, Puzzle-Mechaniken, Event-Trigger, Questbelohnungen
+
+---
+
 ## 👥 Credits
 
 ### 🖥️ Programmierung & Development
@@ -266,28 +308,6 @@ RodDataManager  PressurePlateManager  AnchorManager
 - Ressource Pack Design
 - Visual Effects & Branding
 - Asset Creation
-
----
-
-## 📄 Lizenz
-
-```
-MIT License
-
-Copyright (c) 2024 EinMensch002 & Thorny Devel Studio
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
-
-Vollständige Lizenz: [LICENSE](LICENSE)
 
 ---
 
@@ -308,38 +328,8 @@ Vollständige Lizenz: [LICENSE](LICENSE)
 
 ![Development](https://img.shields.io/badge/Status-Stable-brightgreen?style=flat-square)
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)
-![Tests](https://img.shields.io/badge/Tested-Paper%201.20.2-green?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
-
----
-
-## 🎮 Gameplay-Beispiele
-
-### Beispiel 1: Redstone-Schleife
-```
-Angelrute → Druckplatte → Redstone-Leitungen → Lampe
-           (Dauersignal 15)
-           ↓
-       Lampe leuchtet IMMER
-```
-
-### Beispiel 2: Quest-Reward
-```
-[1] Quest-Angel werfen → Platte aktiviert
-                         ↓
-                    Quest-Mechanik startet
-                         ↓
-                    Rute wird zerstört
-```
-
-### Beispiel 3: Custom-Map-Puzzle
-```
-3 Angelruten auf 3 verschiedene Platten
-                    ↓
-          Alle Signale aktiv?
-                    ↓
-          Tür-Mechanik entsperrt
-```
+![Tested On](https://img.shields.io/badge/Tested%20On-Paper%201.20.2-green?style=flat-square)
+![Open Source](https://img.shields.io/badge/Open%20Source-Weißer%20Code-white?style=flat-square)
 
 ---
 
@@ -349,7 +339,7 @@ Angelrute → Druckplatte → Redstone-Leitungen → Lampe
 
 ![Made with Java](https://img.shields.io/badge/Made%20with-Java-orange?style=flat-square)
 ![Paper API](https://img.shields.io/badge/Paper-API-red?style=flat-square)
-![Minecraft](https://img.shields.io/badge/Minecraft-1.20+-green?style=flat-square)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.20.2-green?style=flat-square)
 
 **[⬆ Nach oben](#-stasisrod---fishing-rod-link-plugin)**
 
