@@ -1,4 +1,4 @@
-name: Build StasisRod Plugin
+name: Build RodLink Plugin
 
 on:
   push:
@@ -27,6 +27,6 @@ jobs:
       - name: Fertiges Plugin (.jar) als Artifact hochladen
         uses: actions/upload-artifact@v4
         with:
-          name: StasisRod-Plugin
+          name: RodLink-Plugin
           path: target/*.jar
 
