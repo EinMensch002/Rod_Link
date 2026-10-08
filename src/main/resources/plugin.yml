@@ -1,6 +1,6 @@
 
-name: StasisRod
+name: RodLink
 version: 1.0.0
-main: de.example.plugin.StasisRodPlugin
+main: de.example.plugin.RodLinkPlugin
 api-version: '1.20'
 description: 'Verlinkt Angelruten mit Redstone-Druckplatten'
