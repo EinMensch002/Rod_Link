@@ -12,10 +12,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Hauptklasse für das StasisRod Paper-Plugin.
+ * Hauptklasse für das RodLink Paper-Plugin.
  * Verlinkt Angelruten mit Redstone-Druckplatten.
  */
-public final class StasisRodPlugin extends JavaPlugin {
+public final class RodLinkPlugin extends JavaPlugin {
 
     private RodDataManager rodDataManager;
     private PressurePlateManager pressurePlateManager;
@@ -40,7 +40,7 @@ public final class StasisRodPlugin extends JavaPlugin {
         // Start des Schimmer-Partikel-Tasks (Start-Delay: 20 Ticks, Period: 10 Ticks / 0.5s)
         new ShimmerParticleTask(this, this.pressurePlateManager).runTaskTimer(this, 20L, 10L);
 
-        getLogger().info("StasisRod v" + getPluginMeta().getVersion() + " wurde erfolgreich aktiviert!");
+        getLogger().info("RodLink v" + getPluginMeta().getVersion() + " wurde erfolgreich aktiviert!");
     }
 
     @Override
@@ -48,7 +48,7 @@ public final class StasisRodPlugin extends JavaPlugin {
         // Abbruch aller laufenden Tasks
         Bukkit.getScheduler().cancelTasks(this);
 
-        getLogger().info("StasisRod wurde erfolgreich deaktiviert.");
+        getLogger().info("RodLink wurde erfolgreich deaktiviert.");
     }
 
     public RodDataManager getRodDataManager() {
