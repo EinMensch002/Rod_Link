@@ -1,1 +1,32 @@
+name: Build StasisRod Plugin
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Java 21 einrichten
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Plugin mit Maven bauen
+        run: mvn clean package --batch-mode
+
+      - name: Fertiges Plugin (.jar) als Artifact hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: StasisRod-Plugin
+          path: target/*.jar
 
