@@ -48,7 +48,7 @@ Alle nennenswerten Änderungen an diesem Projekt werden in dieser Datei dokument
 - **Ressourcen & Design**: Thorny Devel Studio
 
 ### 📝 Anmerkungen
-Dies ist die erste offizielle Release-Version. Das Plugin wurde auf **Paper 1.20.1** getestet und ist einsatzbereit, wird jedoch zeitnah auf weiteren Plattformen und Versionen validiert.
+Dies ist die erste offizielle Release-Version. Das Plugin wurde auf **Paper 26.2** getestet und ist einsatzbereit, wird jedoch zeitnah auf weiteren Plattformen und Versionen validiert.
 
 ---
 
