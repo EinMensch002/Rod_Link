@@ -301,7 +301,7 @@ Angelrute "Stasis" auf Druckplatte werfen
 - Testing & Optimization
 
 ### 🎨 Ressourcen & Design
-**Thorny Devel Studio**
+**Thorny Devil Studio**
 - Custom Texturen & Modelle
 - Ressource Pack Design
 - Visual Effects & Branding
