@@ -20,6 +20,8 @@ Alle nennenswerten Änderungen an diesem Projekt werden in dieser Datei dokument
 ### 🔧 Änderungen
 - Nachrichten-Präfix von `[Stasis]` auf `[RodLink]` geändert
 - Schlüsselwörter "tnt" und "snapshot" lösen das TNT-Modell (1002) aus
+- Paket von `de.example.plugin` auf `io.github.einmensch002.rodlink` umbenannt
+- MIT-Lizenz hinzugefügt
 
 ---
 
