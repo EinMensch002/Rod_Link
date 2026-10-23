@@ -189,8 +189,9 @@ particles:
 # 💬 System-Nachrichten (MiniMessage-Format)
 # Unterstützt Farben: <green>, <red>, <gold>, <aqua>, etc.
 messages:
-  linked_success: "<green>[Stasis] Druckplatte erfolgreich verlinkt!"
-  link_broken: "<red>[Stasis] Verlinkung wurde getrennt (Ziel nicht gefunden)."
+  linked_success: "<green>[RodLink] Druckplatte erfolgreich verlinkt!"
+  link_broken: "<red>[RodLink] Verlinkung wurde getrennt (Ziel nicht gefunden)."
+  already_linked: "<red>[RodLink] Diese Druckplatte ist bereits verlinkt."
 ```
 
 ---

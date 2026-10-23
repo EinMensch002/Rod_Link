@@ -14,6 +14,6 @@ particles:
 
 # System-Nachrichten (MiniMessage-Format)
 messages:
-  linked_success: "<green>[Stasis] Druckplatte erfolgreich verlinkt!"
-  link_broken: "<red>[Stasis] Verlinkung wurde getrennt (Ziel nicht gefunden)."
-  already_linked: "<red>Diese Druckplatte ist bereits verlinkt."
+  linked_success: "<green>[RodLink] Druckplatte erfolgreich verlinkt!"
+  link_broken: "<red>[RodLink] Verlinkung wurde getrennt (Ziel nicht gefunden)."
+  already_linked: "<red>[RodLink] Diese Druckplatte ist bereits verlinkt."
