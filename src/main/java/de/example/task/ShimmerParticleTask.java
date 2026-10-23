@@ -38,7 +38,7 @@ public class ShimmerParticleTask extends BukkitRunnable {
             }
 
             // PERFORMANCE-CHECK: Verhindert das unbeabsichtigte Laden von Chunks!
-            if (!world.isChunkLoaded(location.getChunk())) {
+            if (!world.isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {
                 continue;
             }
 

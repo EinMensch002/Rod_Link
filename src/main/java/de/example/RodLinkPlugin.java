@@ -28,14 +28,17 @@ public final class RodLinkPlugin extends JavaPlugin {
 
         // Initialisierung der Manager
         this.rodDataManager = new RodDataManager(this);
-        this.pressurePlateManager = new PressurePlateManager(this);
         this.anchorManager = new AnchorManager(this);
+        this.pressurePlateManager = new PressurePlateManager(this, this.anchorManager);
 
         // Registrierung der Event-Listener
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this.pressurePlateManager, this);
         pm.registerEvents(new PlayerFishListener(this, this.rodDataManager, this.pressurePlateManager, this.anchorManager), this);
-        pm.registerEvents(new PrepareItemCraftListener(this, this.rodDataManager), this);
+        pm.registerEvents(new PrepareItemCraftListener(this, this.rodDataManager, this.pressurePlateManager), this);
+
+        // Verlinkungen aus vorhandenen Ankern wiederherstellen und Aufräum-Prüfung starten
+        this.pressurePlateManager.start();
 
         // Start des Schimmer-Partikel-Tasks (Start-Delay: 20 Ticks, Period: 10 Ticks / 0.5s)
         new ShimmerParticleTask(this, this.pressurePlateManager).runTaskTimer(this, 20L, 10L);

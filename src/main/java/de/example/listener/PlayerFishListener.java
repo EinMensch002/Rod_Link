@@ -168,30 +168,22 @@ public class PlayerFishListener implements Listener {
 
         RodData rodData = rodDataOpt.get();
         Location targetLoc = rodData.toLocation();
-        UUID anchorUuid = rodData.armorStandUuid();
         boolean isSingleUse = rodData.isSingleUse();
 
         World world = Bukkit.getWorld(rodData.worldUuid());
 
-        // 1. 16-Sekunden-Chunk-Ticket am Ziel setzen
-        if (world != null) {
-            int chunkX = (int) Math.floor(rodData.x()) >> 4;
-            int chunkZ = (int) Math.floor(rodData.z()) >> 4;
-            world.addPluginChunkTicket(chunkX, chunkZ, plugin);
-        }
-
-        // 2. Existenz-Prüfung & Bereinigung von Anker und Druckplatte
-        boolean plateWasLinked = (world != null && targetLoc != null && pressurePlateManager.isLinked(targetLoc));
-
+        // 1./2. Anker entfernen und Druckplatte freigeben (lädt den Chunk bei Bedarf asynchron mit temporärem Ticket)
         if (world != null && targetLoc != null) {
-            anchorManager.removeAnchor(world, anchorUuid, targetLoc);
-            pressurePlateManager.removeLocation(targetLoc);
-        }
-
-        // Fail-Safe: Nachricht senden, falls die Verbindung getrennt/zerstört war
-        if (!plateWasLinked) {
+            pressurePlateManager.releaseLink(world, targetLoc, hadLink -> {
+                // Fail-Safe: Nachricht senden, falls die Verbindung getrennt/zerstört war
+                if (!hadLink) {
+                    sendConfigMessage(player, "messages.link_broken", "<red>Verlinkung wurde getrennt (Ziel nicht gefunden).");
+                    debugLog("Verlinkung für " + player.getName() + " war unterbrochen/zerstört.");
+                }
+            });
+        } else {
             sendConfigMessage(player, "messages.link_broken", "<red>Verlinkung wurde getrennt (Ziel nicht gefunden).");
-            debugLog("Verlinkung für " + player.getName() + " war unterbrochen/zerstört.");
+            debugLog("Verlinkung für " + player.getName() + " war unterbrochen (Welt nicht gefunden).");
         }
 
         // 3. Item-Abwicklung
@@ -209,6 +201,8 @@ public class PlayerFishListener implements Listener {
                 storedDamage = meta.getPersistentDataContainer().getOrDefault(keyStoredDamage, PersistentDataType.INTEGER, 0);
                 meta.getPersistentDataContainer().remove(keyStoredDamage);
                 meta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
+                // Custom Model Data zurücksetzen -> Standardmodell
+                rodDataManager.resetLinkModel(meta);
                 rod.setItemMeta(meta);
             }
 
