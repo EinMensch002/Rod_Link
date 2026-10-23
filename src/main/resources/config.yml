@@ -16,3 +16,4 @@ particles:
 messages:
   linked_success: "<green>[Stasis] Druckplatte erfolgreich verlinkt!"
   link_broken: "<red>[Stasis] Verlinkung wurde getrennt (Ziel nicht gefunden)."
+  already_linked: "<red>Diese Druckplatte ist bereits verlinkt."

@@ -105,6 +105,15 @@ public class PlayerFishListener implements Listener {
      */
     private void handleLinking(@NotNull Player player, @NotNull ItemStack rod, @NotNull Block plateBlock, @NotNull FishHook hook) {
         Location blockLoc = plateBlock.getLocation();
+
+        // Eine Platte kann nur von einer Angel gleichzeitig verlinkt sein
+        if (pressurePlateManager.isLinked(blockLoc)) {
+            hook.remove();
+            sendConfigMessage(player, "messages.already_linked", "<red>Diese Druckplatte ist bereits verlinkt.");
+            debugLog("Verlinkung von " + player.getName() + " abgelehnt, Platte bereits verlinkt: " + blockLoc);
+            return;
+        }
+
         ItemMeta meta = rod.getItemMeta();
         if (meta == null) {
             return;
