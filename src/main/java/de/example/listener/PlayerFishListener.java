@@ -15,7 +15,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Powerable;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -238,12 +237,12 @@ public class PlayerFishListener implements Listener {
 
         Location loc = hook.getLocation();
         Block atLoc = loc.getBlock();
-        if (atLoc.getBlockData() instanceof Powerable) {
+        if (pressurePlateManager.isLinkable(atLoc)) {
             return atLoc;
         }
 
         Block below = loc.clone().add(0, -0.2, 0).getBlock();
-        if (below.getBlockData() instanceof Powerable) {
+        if (pressurePlateManager.isLinkable(below)) {
             return below;
         }
 

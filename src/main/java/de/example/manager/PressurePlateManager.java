@@ -2,8 +2,11 @@ package de.example.plugin.manager;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.AnaloguePowerable;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -64,10 +67,39 @@ public class PressurePlateManager implements Listener {
     }
 
     /**
-     * Gibt an, ob der Block als verlinkbare Platte gilt.
+     * Gibt an, ob der Block eine verlinkbare Druckplatte ist (alle Druckplatten inklusive der gewichteten).
+     * Türen, Hebel, Knöpfe, Lampen usw. zählen bewusst nicht dazu.
      */
-    private boolean isLinkable(@NotNull Block block) {
-        return block.getBlockData() instanceof Powerable;
+    public boolean isLinkable(@NotNull Block block) {
+        return Tag.PRESSURE_PLATES.isTagged(block.getType());
+    }
+
+    /**
+     * Schaltet eine Druckplatte an oder aus. Normale Platten über "powered", gewichtete Platten über die Signalstärke.
+     * Innerhalb eines Physik-Events muss applyPhysics false sein, damit keine Endlosschleife entsteht.
+     */
+    private void applyPower(@NotNull Block block, boolean on, boolean applyPhysics) {
+        BlockData data = block.getBlockData();
+        if (data instanceof Powerable powerable) {
+            powerable.setPowered(on);
+            block.setBlockData(powerable, applyPhysics);
+        } else if (data instanceof AnaloguePowerable analogue) {
+            analogue.setPower(on ? analogue.getMaximumPower() : 0);
+            block.setBlockData(analogue, applyPhysics);
+        }
+    }
+
+    /**
+     * Prüft, ob der Blockzustand dem erwarteten "an"-Zustand entspricht.
+     */
+    private boolean isActive(@NotNull BlockData data) {
+        if (data instanceof Powerable powerable) {
+            return powerable.isPowered();
+        }
+        if (data instanceof AnaloguePowerable analogue) {
+            return analogue.getPower() == analogue.getMaximumPower();
+        }
+        return false;
     }
 
     /**
@@ -76,11 +108,7 @@ public class PressurePlateManager implements Listener {
     public void addLocation(@NotNull Location location) {
         Location blockLoc = toBlockLocation(location);
         if (linkedLocations.add(blockLoc)) {
-            Block block = blockLoc.getBlock();
-            if (block.getBlockData() instanceof Powerable powerable) {
-                powerable.setPowered(true);
-                block.setBlockData(powerable, true);
-            }
+            applyPower(blockLoc.getBlock(), true, true);
             debugLog("Druckplatte verlinkt an Location: " + blockLoc);
         }
     }
@@ -91,11 +119,7 @@ public class PressurePlateManager implements Listener {
     public void removeLocation(@NotNull Location location) {
         Location blockLoc = toBlockLocation(location);
         if (linkedLocations.remove(blockLoc)) {
-            Block block = blockLoc.getBlock();
-            if (block.getBlockData() instanceof Powerable powerable) {
-                powerable.setPowered(false);
-                block.setBlockData(powerable, true);
-            }
+            applyPower(blockLoc.getBlock(), false, true);
             debugLog("Druckplatte entlinkt an Location: " + blockLoc);
         }
     }
@@ -283,19 +307,18 @@ public class PressurePlateManager implements Listener {
         Block block = event.getBlock();
         Location blockLoc = toBlockLocation(block.getLocation());
 
-        if (isLinked(blockLoc)) {
-            if (block.getBlockData() instanceof Powerable powerable) {
-                // Kein Halt mehr -> Platte darf abfallen, die Aufräum-Prüfung entfernt anschließend den Anker
-                if (!block.canPlace(powerable)) {
-                    return;
-                }
-                if (!powerable.isPowered()) {
-                    powerable.setPowered(true);
-                    block.setBlockData(powerable, false);
-                    debugLog("BlockPhysicsEvent an " + blockLoc + " -> setPowered(true) re-installiert.");
-                }
-                event.setCancelled(true);
+        if (isLinked(blockLoc) && isLinkable(block)) {
+            BlockData data = block.getBlockData();
+
+            // Kein Halt mehr -> Platte darf abfallen, die Aufräum-Prüfung entfernt anschließend den Anker
+            if (!block.canPlace(data)) {
+                return;
             }
+            if (!isActive(data)) {
+                applyPower(block, true, false);
+                debugLog("BlockPhysicsEvent an " + blockLoc + " -> Signal re-installiert.");
+            }
+            event.setCancelled(true);
         }
     }
 
@@ -307,11 +330,9 @@ public class PressurePlateManager implements Listener {
         Block block = event.getBlock();
         Location blockLoc = toBlockLocation(block.getLocation());
 
-        if (isLinked(blockLoc)) {
-            if (block.getBlockData() instanceof Powerable) {
-                event.setCancelled(true);
-                debugLog("EntityInteractEvent an " + blockLoc + " -> Interaktion abgebrochen.");
-            }
+        if (isLinked(blockLoc) && isLinkable(block)) {
+            event.setCancelled(true);
+            debugLog("EntityInteractEvent an " + blockLoc + " -> Interaktion abgebrochen.");
         }
     }
 
