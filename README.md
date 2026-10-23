@@ -45,7 +45,7 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 - Redstone-Signalstärke **15** bleibt permanent erhalten
 - Unabhängig von Entity-Gewicht oder Aktivität
 - Perfekt für zuverlässige Maschinen
-- Funktioniert auch in nicht geladenen Chunks dank Lazy Loading
+- Entlinken funktioniert auch bei nicht geladenen Chunks (der Chunk wird dafür kurz geladen)
 
 ### 💧 **Visuelle Effekte**
 - Shimmer-Partikeleffekte an verlinkten Platten
@@ -70,7 +70,7 @@ Damit eröffnen sich völlig neue Möglichkeiten für:
 ### 🎨 **CustomModelData**
 - Automatische Textur-Zuweisung nach Ruten-Namen
 - **Stasis-Rod** (Keyword: "stasis") → CustomModelData 1001
-- **Orbital/Nuke** (Keywords: "orbital", "nuke", "stabshot") → CustomModelData 1002
+- **TNT** (Keywords: "tnt", "orbital", "snapshot", "nuke", "stabshot") → CustomModelData 1002
 - **Trap** (Keywords: "trap", "falle") → CustomModelData 1003
 
 ---

@@ -136,7 +136,7 @@ public class PlayerFishListener implements Listener {
             String lower = plainName.toLowerCase();
             if (lower.contains("stasis")) {
                 meta.setCustomModelData(1001);
-            } else if (lower.contains("orbital") || lower.contains("nuke") || lower.contains("stabshot")) {
+            } else if (lower.contains("tnt") || lower.contains("orbital") || lower.contains("snapshot") || lower.contains("nuke") || lower.contains("stabshot")) {
                 meta.setCustomModelData(1002);
             } else if (lower.contains("trap") || lower.contains("falle")) {
                 meta.setCustomModelData(1003);
