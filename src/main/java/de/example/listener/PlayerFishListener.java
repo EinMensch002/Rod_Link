@@ -62,12 +62,23 @@ public class PlayerFishListener implements Listener {
     public void onPlayerFish(@NotNull PlayerFishEvent event) {
         Player player = event.getPlayer();
 
-        // 1. Ermittle die genutzte Angelrute und den Hand-Slot
-        EquipmentSlot slot = EquipmentSlot.HAND;
-        ItemStack rod = player.getInventory().getItemInMainHand();
-        if (rod.getType() != Material.FISHING_ROD) {
+        // 1. Ermittle die genutzte Angelrute und den Hand-Slot (bevorzugt die Hand, die das Event ausgelöst hat)
+        EquipmentSlot slot = event.getHand();
+        ItemStack rod = null;
+        if (slot == EquipmentSlot.HAND) {
+            rod = player.getInventory().getItemInMainHand();
+        } else if (slot == EquipmentSlot.OFF_HAND) {
             rod = player.getInventory().getItemInOffHand();
-            slot = EquipmentSlot.OFF_HAND;
+        }
+
+        // Fallback (Hand unbekannt oder dort keine Angel): Haupthand zuerst, dann Nebenhand
+        if (rod == null || rod.getType() != Material.FISHING_ROD) {
+            slot = EquipmentSlot.HAND;
+            rod = player.getInventory().getItemInMainHand();
+            if (rod.getType() != Material.FISHING_ROD) {
+                rod = player.getInventory().getItemInOffHand();
+                slot = EquipmentSlot.OFF_HAND;
+            }
         }
 
         if (rod.getType() != Material.FISHING_ROD) {
