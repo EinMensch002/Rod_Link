@@ -4,6 +4,25 @@ Alle nennenswerten Änderungen an diesem Projekt werden in dieser Datei dokument
 
 ---
 
+## [Unreleased]
+
+### 🐛 Fehlerbehebungen
+- Verlinkte Druckplatte wird zerstört: Marker und Verlinkung werden entfernt (#1)
+- Crafting-Entlinken gibt Marker und Platte frei, sobald die Angel entnommen wird (#2)
+- Verlinkungen werden nach einem Server-Neustart aus den Markern wiederhergestellt (#3)
+- Keine ungewollten Chunk-Ladungen mehr, Chunk-Tickets werden freigegeben (#4)
+- Custom Model Data wird beim Entlinken zurückgesetzt (#5)
+- Nur echte Druckplatten werden verlinkt, gewichtete Platten werden unterstützt (#6)
+- Es wird die Angel der auslösenden Hand verwendet (#7)
+- Eine Druckplatte kann nur von einer Angel gleichzeitig verlinkt werden (#8)
+- Falsche `groupId` des `maven-compiler-plugin` in der `pom.xml` korrigiert (#9)
+
+### 🔧 Änderungen
+- Nachrichten-Präfix von `[Stasis]` auf `[RodLink]` geändert
+- Schlüsselwörter "tnt" und "snapshot" lösen das TNT-Modell (1002) aus
+
+---
+
 ## [1.0.0] - 2026 (Initial Release)
 
 ### ✨ Features
