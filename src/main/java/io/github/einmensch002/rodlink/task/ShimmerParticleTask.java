@@ -1,7 +1,7 @@
 
-package de.example.plugin.task;
+package io.github.einmensch002.rodlink.task;
 
-import de.example.plugin.manager.PressurePlateManager;
+import io.github.einmensch002.rodlink.manager.PressurePlateManager;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;

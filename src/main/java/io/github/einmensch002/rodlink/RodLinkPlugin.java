@@ -1,12 +1,12 @@
 
-package de.example.plugin;
+package io.github.einmensch002.rodlink;
 
-import de.example.plugin.listener.PlayerFishListener;
-import de.example.plugin.listener.PrepareItemCraftListener;
-import de.example.plugin.manager.AnchorManager;
-import de.example.plugin.manager.PressurePlateManager;
-import de.example.plugin.manager.RodDataManager;
-import de.example.plugin.task.ShimmerParticleTask;
+import io.github.einmensch002.rodlink.listener.PlayerFishListener;
+import io.github.einmensch002.rodlink.listener.PrepareItemCraftListener;
+import io.github.einmensch002.rodlink.manager.AnchorManager;
+import io.github.einmensch002.rodlink.manager.PressurePlateManager;
+import io.github.einmensch002.rodlink.manager.RodDataManager;
+import io.github.einmensch002.rodlink.task.ShimmerParticleTask;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,7 +1,7 @@
-package de.example.plugin.listener;
+package io.github.einmensch002.rodlink.listener;
 
-import de.example.plugin.manager.PressurePlateManager;
-import de.example.plugin.manager.RodDataManager;
+import io.github.einmensch002.rodlink.manager.PressurePlateManager;
+import io.github.einmensch002.rodlink.manager.RodDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

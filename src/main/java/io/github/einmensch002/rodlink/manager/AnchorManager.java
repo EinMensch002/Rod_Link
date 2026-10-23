@@ -1,4 +1,4 @@
-package de.example.plugin.manager;
+package io.github.einmensch002.rodlink.manager;
 
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;

@@ -1,10 +1,10 @@
 
-package de.example.plugin.listener;
+package io.github.einmensch002.rodlink.listener;
 
-import de.example.plugin.manager.AnchorManager;
-import de.example.plugin.manager.PressurePlateManager;
-import de.example.plugin.manager.RodDataManager;
-import de.example.plugin.manager.RodDataManager.RodData;
+import io.github.einmensch002.rodlink.manager.AnchorManager;
+import io.github.einmensch002.rodlink.manager.PressurePlateManager;
+import io.github.einmensch002.rodlink.manager.RodDataManager;
+import io.github.einmensch002.rodlink.manager.RodDataManager.RodData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;

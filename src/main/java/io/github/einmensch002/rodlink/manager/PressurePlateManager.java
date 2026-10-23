@@ -1,4 +1,4 @@
-package de.example.plugin.manager;
+package io.github.einmensch002.rodlink.manager;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
