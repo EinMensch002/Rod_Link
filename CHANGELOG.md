@@ -18,6 +18,7 @@ Fehlerbehebungen nach einem Code-Review. Alles wurde auf Paper 26.2 getestet, au
 - Es wird die Angel der Hand verwendet, die das Event ausgelöst hat (#7, getestet)
 - Eine Druckplatte kann nur mit einer Angel gleichzeitig verlinkt sein (#8, getestet)
 - `groupId` des `maven-compiler-plugin` in der `pom.xml` korrigiert (#9)
+- Redstone-Bauteile am Block unter der Platte (Fackeln, Kolben usw.) werden beim Verlinken und Entlinken jetzt aktualisiert (#11, noch nicht getestet)
 
 ### Geändert
 - Nachrichten-Präfix von `[Stasis]` auf `[RodLink]`

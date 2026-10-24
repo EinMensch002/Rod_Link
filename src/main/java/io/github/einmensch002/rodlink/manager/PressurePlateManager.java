@@ -2,6 +2,7 @@ package io.github.einmensch002.rodlink.manager;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -90,6 +91,38 @@ public class PressurePlateManager implements Listener {
     }
 
     /**
+     * Gibt eine Kopie des Blockzustands mit dem gewünschten Signal zurück.
+     */
+    private BlockData withPower(@NotNull BlockData data, boolean on) {
+        BlockData copy = data.clone();
+        if (copy instanceof Powerable powerable) {
+            powerable.setPowered(on);
+        } else if (copy instanceof AnaloguePowerable analogue) {
+            analogue.setPower(on ? analogue.getMaximumPower() : 0);
+        }
+        return copy;
+    }
+
+    /**
+     * Schaltet die Platte an oder aus und meldet das den Nachbarn des Blocks unter der Platte.
+     * Eine normal betätigte Platte tut das selbst, ein einfaches setBlockData() nicht. Deshalb würden Fackeln, Kolben
+     * usw. am Block unter der Platte sonst ihren Zustand nicht neu auswerten. Wird eine aktive Platte durch Luft
+     * ersetzt, löst Minecraft diese Nachbar-Updates aus. Danach wird die Platte im Zielzustand wieder gesetzt.
+     */
+    private void switchPlate(@NotNull Block block, boolean on) {
+        if (!isLinkable(block)) {
+            return;
+        }
+        BlockData target = withPower(block.getBlockData(), on);
+        if (on) {
+            // Erst anschalten, damit die Platte beim Ersetzen aktiv ist
+            block.setBlockData(target, true);
+        }
+        block.setType(Material.AIR, false);
+        block.setBlockData(target, true);
+    }
+
+    /**
      * Prüft, ob der Blockzustand dem erwarteten "an"-Zustand entspricht.
      */
     private boolean isActive(@NotNull BlockData data) {
@@ -108,7 +141,7 @@ public class PressurePlateManager implements Listener {
     public void addLocation(@NotNull Location location) {
         Location blockLoc = toBlockLocation(location);
         if (linkedLocations.add(blockLoc)) {
-            applyPower(blockLoc.getBlock(), true, true);
+            switchPlate(blockLoc.getBlock(), true);
             debugLog("Druckplatte verlinkt an Location: " + blockLoc);
         }
     }
@@ -119,7 +152,7 @@ public class PressurePlateManager implements Listener {
     public void removeLocation(@NotNull Location location) {
         Location blockLoc = toBlockLocation(location);
         if (linkedLocations.remove(blockLoc)) {
-            applyPower(blockLoc.getBlock(), false, true);
+            switchPlate(blockLoc.getBlock(), false);
             debugLog("Druckplatte entlinkt an Location: " + blockLoc);
         }
     }
