@@ -1,18 +1,20 @@
+# RodLink Konfiguration
 
-# RodLink Plugin Konfiguration
-
-# Entwickler-Debug-Modus für detaillierte Konsolen-Ausgaben
+# Ausführliche Ausgaben in der Konsole (nur zum Fehlersuchen)
 debug: false
 
-# Haltbarkeits-Abzug nach normaler Entlinkung (Mehrweg-Angel)
+# Haltbarkeitsverlust, wenn eine verlinkte Angel durch Benutzen entlinkt wird
+# (nicht beim Entlinken über das Crafting-Gitter, Einweg-Angeln werden immer zerstört)
 durability_penalty: 10
 
-# Partikel-Einstellungen
+# Partikel an verlinkten Druckplatten
 particles:
   enabled: true
+  # Partikel erscheinen nur, wenn ein Spieler in diesem Umkreis (in Blöcken) ist
   radius: 10.0
 
-# System-Nachrichten (MiniMessage-Format)
+# Nachrichten im MiniMessage-Format (Farben wie <green>, <red>)
 messages:
-  linked_success: "<green>[Stasis] Druckplatte erfolgreich verlinkt!"
-  link_broken: "<red>[Stasis] Verlinkung wurde getrennt (Ziel nicht gefunden)."
+  linked_success: "<green>[RodLink] Druckplatte erfolgreich verlinkt!"
+  link_broken: "<red>[RodLink] Verlinkung wurde getrennt (Ziel nicht gefunden)."
+  already_linked: "<red>[RodLink] Diese Druckplatte ist bereits verlinkt."

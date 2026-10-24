@@ -1,0 +1,36 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 1001,
+        "model": { "type": "minecraft:model", "model": "rod_link:item/enderpearl_rod" }
+      },
+      {
+        "threshold": 1002,
+        "model": { "type": "minecraft:model", "model": "rod_link:item/tnt_rod" }
+      },
+      {
+        "threshold": 1003,
+        "model": { "type": "minecraft:model", "model": "rod_link:item/redstone_rod" }
+      },
+      {
+        "threshold": 1004,
+        "model": {
+          "type": "minecraft:condition",
+          "property": "minecraft:fishing_rod/cast",
+          "on_false": { "type": "minecraft:model", "model": "minecraft:item/fishing_rod" },
+          "on_true": { "type": "minecraft:model", "model": "minecraft:item/fishing_rod_cast" }
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:condition",
+      "property": "minecraft:fishing_rod/cast",
+      "on_false": { "type": "minecraft:model", "model": "minecraft:item/fishing_rod" },
+      "on_true": { "type": "minecraft:model", "model": "minecraft:item/fishing_rod_cast" }
+    }
+  }
+}
