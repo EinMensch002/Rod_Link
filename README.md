@@ -48,9 +48,9 @@ Mögliche Einsatzzwecke sind zuverlässige Signalquellen für Redstone-Maschinen
 ## 🚀 Installation
 
 ### ✅ Anforderungen
-- Paper 26.2
+- Paper 26.2 (hier getestet)
 - Java 21
-- ⚠️ Andere Versionen sind nicht getestet
+- ⚠️ Gebaut ist das Plugin gegen die Paper-API 1.20.6 (`api-version: 1.20`). Auf Versionen zwischen 1.20.6 und 26.2 oder darunter kann es laufen, getestet habe ich es dort nicht.
 
 ### Schritte
 1. `.jar`-Datei aus den [Releases](../../releases) laden.
@@ -123,7 +123,7 @@ Version 1.0.1, alles auf einem Testserver mit Paper 26.2.
 | Server-Neustart (Verlinkung bleibt erhalten) | ⚠️ noch nicht getestet |
 | Entlinken bei weit entfernter, nicht geladener Platte | ⚠️ noch nicht getestet |
 | Nether und End | ⚠️ lief in 1.0.0, in 1.0.1 nicht erneut getestet |
-| Andere Minecraft-/Paper-Versionen | ⚠️ nicht getestet |
+| Andere Minecraft-/Paper-Versionen | ⚠️ nicht getestet (gebaut gegen Paper-API 1.20.6) |
 
 ---
 
@@ -141,12 +141,12 @@ Version 1.0.1, alles auf einem Testserver mit Paper 26.2.
 - **EinMensch002**: Plugin und Code
 - **Thorny Devil Studio**: Texturen für das Resource Pack
 
-Das Projekt ist frei. Jeder darf mitarbeiten und den Code für beliebige Zwecke verwenden. Repository: [EinMensch002/Rod_Link](https://github.com/EinMensch002/Rod_Link)
+Das Projekt ist Public Domain (Unlicense, siehe [LICENSE](LICENSE)). Jeder darf mitarbeiten und den Code für beliebige Zwecke verwenden. Repository: [EinMensch002/Rod_Link](https://github.com/EinMensch002/Rod_Link)
 
 ---
 
 ## 📊 Projekt-Status
 
-![Status](https://img.shields.io/badge/Status-Stable-brightgreen?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Beta-yellow?style=flat-square)
 ![Version](https://img.shields.io/badge/Version-1.0.1-blue?style=flat-square)
 ![Tested On](https://img.shields.io/badge/Tested%20On-Paper%2026.2-green?style=flat-square)
