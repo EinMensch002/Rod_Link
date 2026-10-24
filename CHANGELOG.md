@@ -24,7 +24,6 @@ Fehlerbehebungen nach einem Code-Review. Alles wurde auf Paper 26.2 getestet, au
 - Die Schlüsselwörter `tnt` und `snapshot` lösen jetzt ebenfalls das TNT-Modell (1002) aus
 - Neue Config-Nachricht `messages.already_linked`
 - Paket von `de.example.plugin` auf `io.github.einmensch002.rodlink` umbenannt
-- MIT-Lizenz hinzugefügt
 - README und Changelog überarbeitet, mit ehrlichem Teststand
 
 ### Resource Pack (v0.1.0)
