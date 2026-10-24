@@ -1,4 +1,4 @@
-# 🎣 RodLink - Fishing Rod Link Plugin
+# RodLink - Fishing Rod Link Plugin
 
 ![RodLink](https://img.shields.io/badge/RodLink-v1.0.1-blue?style=for-the-badge&logo=java)
 ![Paper](https://img.shields.io/badge/Paper-26.2-red?style=for-the-badge)
