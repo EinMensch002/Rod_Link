@@ -113,13 +113,34 @@ public class PressurePlateManager implements Listener {
         if (!isLinkable(block)) {
             return;
         }
-        BlockData target = withPower(block.getBlockData(), on);
+        BlockData current = block.getBlockData();
+
+        // Steht die Platte schon im Zielzustand (z. B. beim Wiederherstellen nach einem Chunk-Laden oder Neustart),
+        // wird nichts geändert. Sonst würde jedes Chunk-Laden einen kurzen Block-Update-Impuls auslösen.
+        if (on ? isActive(current) : !isPoweredAtAll(current)) {
+            return;
+        }
+
+        BlockData target = withPower(current, on);
         if (on) {
             // Erst anschalten, damit die Platte beim Ersetzen aktiv ist
             block.setBlockData(target, true);
         }
         block.setType(Material.AIR, false);
         block.setBlockData(target, true);
+    }
+
+    /**
+     * Prüft, ob die Platte überhaupt ein Signal abgibt (bei gewichteten Platten mindestens Stärke 1).
+     */
+    private boolean isPoweredAtAll(@NotNull BlockData data) {
+        if (data instanceof Powerable powerable) {
+            return powerable.isPowered();
+        }
+        if (data instanceof AnaloguePowerable analogue) {
+            return analogue.getPower() > 0;
+        }
+        return false;
     }
 
     /**
