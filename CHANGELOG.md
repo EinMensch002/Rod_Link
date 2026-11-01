@@ -11,7 +11,7 @@ Fehlerbehebungen nach einem Code-Review. Alles wurde auf Paper 26.2 getestet, au
 ### Behoben
 - Verlinkte Druckplatte wird zerstört: Marker und Verlinkung werden jetzt entfernt, die Platte darf bei fehlendem Halt wieder abfallen (#1, getestet)
 - Entlinken über das Crafting-Gitter gibt Marker und Platte frei, sobald die Angel entnommen wird, nicht schon in der Vorschau (#2, getestet)
-- Verlinkungen werden nach einem Server-Neustart aus den Markern wiederhergestellt, Marker ohne Platte werden entfernt (#3, noch nicht getestet)
+- Verlinkungen werden nach einem Server-Neustart aus den Markern wiederhergestellt, Marker ohne Platte werden entfernt (#3, getestet)
 - Keine ungewollten Chunk-Ladungen mehr, das Chunk-Ticket beim Entlinken wird wieder freigegeben, der Chunk wird dafür asynchron geladen (#4, noch nicht getestet)
 - Custom Model Data wird beim Entlinken zurückgesetzt (#5, getestet)
 - Nur echte Druckplatten werden verlinkt (keine Türen, Hebel usw.), gewichtete Platten funktionieren mit Signalstärke 15 (#6, getestet)

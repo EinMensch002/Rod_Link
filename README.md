@@ -120,7 +120,7 @@ Version 1.0.1, alles auf einem Testserver mit Paper 26.2.
 | Entlinken über das Crafting-Gitter | ✅ getestet |
 | Mehrere Angeln auf einer Platte, Angel in Haupt- oder Nebenhand | ✅ getestet |
 | Custom Model Data setzen und zurücksetzen, Resource Pack | ✅ getestet |
-| Server-Neustart (Verlinkung bleibt erhalten) | ⚠️ noch nicht getestet |
+| Server-Neustart (Verlinkung bleibt erhalten) | ✅ getestet |
 | Entlinken bei weit entfernter, nicht geladener Platte | ⚠️ noch nicht getestet |
 | Nether und End | ⚠️ lief in 1.0.0, in 1.0.1 nicht erneut getestet |
 | Andere Minecraft-/Paper-Versionen | ⚠️ nicht getestet (gebaut gegen Paper-API 1.20.6) |
