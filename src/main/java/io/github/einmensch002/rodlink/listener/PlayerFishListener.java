@@ -1,10 +1,10 @@
 
-package de.example.plugin.listener;
+package io.github.einmensch002.rodlink.listener;
 
-import de.example.plugin.manager.AnchorManager;
-import de.example.plugin.manager.PressurePlateManager;
-import de.example.plugin.manager.RodDataManager;
-import de.example.plugin.manager.RodDataManager.RodData;
+import io.github.einmensch002.rodlink.manager.AnchorManager;
+import io.github.einmensch002.rodlink.manager.PressurePlateManager;
+import io.github.einmensch002.rodlink.manager.RodDataManager;
+import io.github.einmensch002.rodlink.manager.RodDataManager.RodData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -15,7 +15,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Powerable;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,12 +62,23 @@ public class PlayerFishListener implements Listener {
     public void onPlayerFish(@NotNull PlayerFishEvent event) {
         Player player = event.getPlayer();
 
-        // 1. Ermittle die genutzte Angelrute und den Hand-Slot
-        EquipmentSlot slot = EquipmentSlot.HAND;
-        ItemStack rod = player.getInventory().getItemInMainHand();
-        if (rod.getType() != Material.FISHING_ROD) {
+        // 1. Ermittle die genutzte Angelrute und den Hand-Slot (bevorzugt die Hand, die das Event ausgelöst hat)
+        EquipmentSlot slot = event.getHand();
+        ItemStack rod = null;
+        if (slot == EquipmentSlot.HAND) {
+            rod = player.getInventory().getItemInMainHand();
+        } else if (slot == EquipmentSlot.OFF_HAND) {
             rod = player.getInventory().getItemInOffHand();
-            slot = EquipmentSlot.OFF_HAND;
+        }
+
+        // Fallback (Hand unbekannt oder dort keine Angel): Haupthand zuerst, dann Nebenhand
+        if (rod == null || rod.getType() != Material.FISHING_ROD) {
+            slot = EquipmentSlot.HAND;
+            rod = player.getInventory().getItemInMainHand();
+            if (rod.getType() != Material.FISHING_ROD) {
+                rod = player.getInventory().getItemInOffHand();
+                slot = EquipmentSlot.OFF_HAND;
+            }
         }
 
         if (rod.getType() != Material.FISHING_ROD) {
@@ -95,6 +105,15 @@ public class PlayerFishListener implements Listener {
      */
     private void handleLinking(@NotNull Player player, @NotNull ItemStack rod, @NotNull Block plateBlock, @NotNull FishHook hook) {
         Location blockLoc = plateBlock.getLocation();
+
+        // Eine Platte kann nur von einer Angel gleichzeitig verlinkt sein
+        if (pressurePlateManager.isLinked(blockLoc)) {
+            hook.remove();
+            sendConfigMessage(player, "messages.already_linked", "<red>Diese Druckplatte ist bereits verlinkt.");
+            debugLog("Verlinkung von " + player.getName() + " abgelehnt, Platte bereits verlinkt: " + blockLoc);
+            return;
+        }
+
         ItemMeta meta = rod.getItemMeta();
         if (meta == null) {
             return;
@@ -117,7 +136,7 @@ public class PlayerFishListener implements Listener {
             String lower = plainName.toLowerCase();
             if (lower.contains("stasis")) {
                 meta.setCustomModelData(1001);
-            } else if (lower.contains("orbital") || lower.contains("nuke") || lower.contains("stabshot")) {
+            } else if (lower.contains("tnt") || lower.contains("orbital") || lower.contains("snapshot") || lower.contains("nuke") || lower.contains("stabshot")) {
                 meta.setCustomModelData(1002);
             } else if (lower.contains("trap") || lower.contains("falle")) {
                 meta.setCustomModelData(1003);
@@ -168,30 +187,22 @@ public class PlayerFishListener implements Listener {
 
         RodData rodData = rodDataOpt.get();
         Location targetLoc = rodData.toLocation();
-        UUID anchorUuid = rodData.armorStandUuid();
         boolean isSingleUse = rodData.isSingleUse();
 
         World world = Bukkit.getWorld(rodData.worldUuid());
 
-        // 1. 16-Sekunden-Chunk-Ticket am Ziel setzen
-        if (world != null) {
-            int chunkX = (int) Math.floor(rodData.x()) >> 4;
-            int chunkZ = (int) Math.floor(rodData.z()) >> 4;
-            world.addPluginChunkTicket(chunkX, chunkZ, plugin);
-        }
-
-        // 2. Existenz-Prüfung & Bereinigung von Anker und Druckplatte
-        boolean plateWasLinked = (world != null && targetLoc != null && pressurePlateManager.isLinked(targetLoc));
-
+        // 1./2. Anker entfernen und Druckplatte freigeben (lädt den Chunk bei Bedarf asynchron mit temporärem Ticket)
         if (world != null && targetLoc != null) {
-            anchorManager.removeAnchor(world, anchorUuid, targetLoc);
-            pressurePlateManager.removeLocation(targetLoc);
-        }
-
-        // Fail-Safe: Nachricht senden, falls die Verbindung getrennt/zerstört war
-        if (!plateWasLinked) {
+            pressurePlateManager.releaseLink(world, targetLoc, hadLink -> {
+                // Fail-Safe: Nachricht senden, falls die Verbindung getrennt/zerstört war
+                if (!hadLink) {
+                    sendConfigMessage(player, "messages.link_broken", "<red>Verlinkung wurde getrennt (Ziel nicht gefunden).");
+                    debugLog("Verlinkung für " + player.getName() + " war unterbrochen/zerstört.");
+                }
+            });
+        } else {
             sendConfigMessage(player, "messages.link_broken", "<red>Verlinkung wurde getrennt (Ziel nicht gefunden).");
-            debugLog("Verlinkung für " + player.getName() + " war unterbrochen/zerstört.");
+            debugLog("Verlinkung für " + player.getName() + " war unterbrochen (Welt nicht gefunden).");
         }
 
         // 3. Item-Abwicklung
@@ -209,6 +220,8 @@ public class PlayerFishListener implements Listener {
                 storedDamage = meta.getPersistentDataContainer().getOrDefault(keyStoredDamage, PersistentDataType.INTEGER, 0);
                 meta.getPersistentDataContainer().remove(keyStoredDamage);
                 meta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
+                // Custom Model Data zurücksetzen -> Standardmodell
+                rodDataManager.resetLinkModel(meta);
                 rod.setItemMeta(meta);
             }
 
@@ -244,12 +257,12 @@ public class PlayerFishListener implements Listener {
 
         Location loc = hook.getLocation();
         Block atLoc = loc.getBlock();
-        if (atLoc.getBlockData() instanceof Powerable) {
+        if (pressurePlateManager.isLinkable(atLoc)) {
             return atLoc;
         }
 
         Block below = loc.clone().add(0, -0.2, 0).getBlock();
-        if (below.getBlockData() instanceof Powerable) {
+        if (pressurePlateManager.isLinkable(below)) {
             return below;
         }
 

@@ -1,6 +1,7 @@
 {
-  "pack":{
-    "pack_format": 26.2,
-    "description": "ResourcePack for the Rod_Link Plugin"
+  "pack": {
+    "description": "Resource Pack for the Rod_Link plugin",
+    "min_format": 88,
+    "max_format": 88
   }
 }

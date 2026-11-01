@@ -1,6 +1,6 @@
 
 name: RodLink
-version: 1.0.0
-main: de.example.plugin.RodLinkPlugin
+version: 1.0.1
+main: io.github.einmensch002.rodlink.RodLinkPlugin
 api-version: '1.20'
 description: 'Verlinkt Angelruten mit Redstone-Druckplatten'

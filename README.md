@@ -1,11 +1,13 @@
-# 🎣 RodLink - Fishing Rod Link Plugin
+# RodLink - Fishing Rod Link Plugin
 
-![RodLink Banner](https://img.shields.io/badge/RodLink-v1.0.0-blue?style=for-the-badge&logo=java)
-![Paper](https://img.shields.io/badge/Paper-26.2-red?style=for-the-badge&logo=apachekafka)
+![RodLink](https://img.shields.io/badge/RodLink-v1.0.1-blue?style=for-the-badge&logo=java)
+![Paper](https://img.shields.io/badge/Paper-26.2-red?style=for-the-badge)
 ![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)
-![Open Source](https://img.shields.io/badge/Open%20Source-Weißer%20Code-white?style=for-the-badge&logo=github)
 
-> **Ein innovatives Minecraft Paper-Plugin, das Angelruten mit Redstone-Druckplatten verbindet und intelligent verwaltet.**
+> Ein Paper-Plugin, das Angeln mit Redstone-Druckplatten verlinkt. Die Platte gibt dauerhaft ein Signal ab, die Verlinkung steckt in der Angel selbst.
+
+**Stand:** Version 1.0.1 (in Arbeit). Entwickelt und getestet 2026 auf **Paper 26.2** mit **Java 21**.
+Andere Minecraft- oder Paper-Versionen sind nicht getestet. Es kann dort funktionieren, muss aber nicht.
 
 ---
 
@@ -14,331 +16,137 @@
 - [Features](#-features)
 - [Installation](#-installation)
 - [Bedienung](#-bedienung)
+- [Resource Pack](#-resource-pack)
 - [Konfiguration](#-konfiguration)
+- [Teststand](#-teststand)
+- [Bekannte Einschränkungen](#-bekannte-einschränkungen)
 - [Credits](#-credits)
-- [Support](#-support)
+- [Projekt-Status](#-projekt-status)
 
 ---
 
 ## 📖 Übersicht
 
-**RodLink** ist ein Paper-Plugin für Minecraft 1.20.6+, das Spielern ermöglicht, Angelruten mit Druckplatten zu verlinken. Diese Verlinkung erzeugt ein **dauerhaftes Redstone-Signal** (Signalstärke 15) an der Druckplatte – unabhängig davon, ob jemand darauf steht.
+Mit RodLink wirfst du eine Angel auf eine Druckplatte und ziehst sie zurück. Danach bleibt die Platte dauerhaft an (Signalstärke 15), egal ob jemand darauf steht. Die Verlinkung steckt in der Angel und nicht im Spieler. Die Angel lässt sich also weitergeben, tauschen oder in einer Map als Schlüssel verwenden.
 
-Damit eröffnen sich völlig neue Möglichkeiten für:
-
-| 🔌 Redstone-Maschinen | 🎯 Custom Maps | ⚙️ Automatisierungssysteme |
-|---|---|---|
-| Zuverlässige Signalquellen | Adventure-Projekte | Neue Puzzle-Mechaniken |
-| Ohne klassische Limitierungen | Spannende Quests | Kreative Konstruktionen |
+Mögliche Einsatzzwecke sind zuverlässige Signalquellen für Redstone-Maschinen, Adventure-Maps und Rätsel.
 
 ---
 
 ## ✨ Features
 
-### 🎣 **Verlinkung**
-- Werfe eine Angelrute einfach auf eine beliebige Druckplatte
-- Der Haken muss die Platte berühren
-- **Wichtig**: Die Verlinkung findet erst statt, wenn du die Angel **zurückziehst** (rechtsklick)
-- Unsichtbare Anker-ArmorStands markieren die Position
-
-### 🔌 **Dauerhaftes Signal**
-- Redstone-Signalstärke **15** bleibt permanent erhalten
-- Unabhängig von Entity-Gewicht oder Aktivität
-- Perfekt für zuverlässige Maschinen
-- Funktioniert auch in nicht geladenen Chunks dank Lazy Loading
-
-### 💧 **Visuelle Effekte**
-- Shimmer-Partikeleffekte an verlinkten Platten
-- Nur für Spieler in Nähe sichtbar (optimiert für Performance)
-- Konfigurierbare Effektradius und Aktivierung
-
-### 🎯 **Single-Use Ruten**
-- Bennenne die Rute mit `[1]` im Namen (z.B. `[1] Spezial-Rute`)
-- Nach einmaliger Nutzung → Permanent zerstört
-- Ideal für Puzzle-Elemente und Questbelohnungen
-
-### 🛠️ **Crafting-Entlinkung**
-- Lege eine verlinkte Rute ins Crafting-Gitter
-- Automatische Reinigung ohne Zerstörung
-- Ideal zum Zurücksetzen von Ruten
-
-### 💾 **Persistente Daten**
-- Alle Verlinkungen bleiben nach Server-Restart erhalten
-- Automatische Wiederherstellung im Falle eines Crashes
-- Sichere Datenspeicherung im ItemMeta
-
-### 🎨 **CustomModelData**
-- Automatische Textur-Zuweisung nach Ruten-Namen
-- **Stasis-Rod** (Keyword: "stasis") → CustomModelData 1001
-- **Orbital/Nuke** (Keywords: "orbital", "nuke", "stabshot") → CustomModelData 1002
-- **Trap** (Keywords: "trap", "falle") → CustomModelData 1003
+- Verlinken mit allen Druckplatten, auch den gewichteten (Gold und Eisen). Türen, Hebel, Knöpfe und Ähnliches werden nicht verlinkt.
+- Eine Platte kann immer nur mit einer Angel gleichzeitig verlinkt sein.
+- Ein unsichtbarer Marker (ArmorStand) hält die Verlinkung fest. Wird die Platte abgebaut oder zerstört, verschwindet er.
+- Entlinken durch Benutzen der Angel (mit Haltbarkeitsverlust) oder über das Crafting-Gitter (ohne Verlust).
+- Einweg-Angeln über `[1]` im Namen.
+- Partikel an verlinkten Platten (einstellbar).
+- Optionales Resource Pack: je nach Namen der Angel ein anderes Aussehen.
 
 ---
 
 ## 🚀 Installation
 
 ### ✅ Anforderungen
-- **Minecraft Server**: Paper 1.20.6+
-  - ⚠️ Getestet auf **Paper 26.2** - Kompatibilität mit älteren Versionen nicht garantiert
-- **Java**: 21 (empfohlen)
+- Paper 26.2 (hier getestet)
+- Java 21
+- ⚠️ Gebaut ist das Plugin gegen die Paper-API 1.20.6 (`api-version: 1.20`). Auf Versionen zwischen 1.20.6 und 26.2 oder darunter kann es laufen, getestet habe ich es dort nicht.
 
-### 📦 Schritt-für-Schritt
-
-1. **Download**
-   - Lade die neueste Version aus den [Releases](../../releases) herunter
-
-2. **Installation**
-   ```
-   plugins/RodLink.jar → in den plugins/ Ordner kopieren
-   ```
-
-3. **Server starten**
-   ```bash
-   ./start.sh
-   # oder dein Server-Startskript
-   ```
-
-4. **Konfiguration anpassen** (optional)
-   ```
-   plugins/RodLink/config.yml
-   ```
-
-5. **Fertig!**
-   - Plugin ist sofort einsatzbereit
+### Schritte
+1. `.jar`-Datei aus den [Releases](../../releases) laden.
+2. In den Ordner `plugins/` des Servers legen.
+3. Server starten. Die Konfiguration liegt danach unter `plugins/RodLink/config.yml`.
 
 ---
 
 ## 🎮 Bedienung
 
-### 🎣 Rute mit Druckplatte verlinken
+**Verlinken:** Wirf die Angel so, dass der Haken auf der Druckplatte landet, und ziehe sie zurück. Du bekommst eine Bestätigung im Chat.
 
-**Wichtig: Das Verlinken erfolgt beim Zurückziehen der Angel!**
+**Entlinken über Benutzen:** Die verlinkte Angel einmal verwenden. Die Platte wird freigegeben und die Angel verliert Haltbarkeit (Standard: 10, einstellbar). Würde sie dadurch kaputtgehen, zerbricht sie.
 
-```
-1. Nimm eine Angelrute in die Hand
-2. Wirf die Rute auf eine beliebige Druckplatte
-3. Der Haken muss die Platte berühren
-4. Ziehe die Angel zurück (Rechtsklick halten)
-   ✅ Verlinkung wird aktiviert
-   ✅ Bestätigungsnachricht
-   ✅ Partikeleffekte (optional)
-   ✅ Signalstärke 15 wird erteilt
-```
+**Entlinken über das Crafting-Gitter:** Die verlinkte Angel allein ins Crafting-Gitter legen und das Ergebnis nehmen. Du bekommst die normale Angel mit allen Verzauberungen und der ursprünglichen Haltbarkeit zurück, ohne Abzug.
 
-### 🔥 Single-Use Ruten erstellen
+**Einweg-Angeln:** Steht `[1]` im Namen (zum Beispiel `Schlüssel [1]`), wird die Angel beim Entlinken über Benutzen immer zerstört. Beim Verlinken wird das `[1]` aus dem Namen entfernt und die Haltbarkeit auf 1 gesetzt. Über das Crafting-Gitter bekommst du sie kostenlos zurück, dann ist es aber eine normale Angel.
 
-```
-Schritt 1: Benenne die Rute um
-  → Am Amboss
+---
 
-Schritt 2: Name muss mit [1] enden
-  → Format: Ruten Name [1] 
-  → Beispiel: Einweg-Spezial[1]
+## 🎨 Resource Pack
 
-Schritt 3: Verlinke normal
-  → Nach Nutzung wird die Rute zerstört
-  → Sound & Effekte bestätigen Zerstörung
-```
+Das Pack liegt im Ordner `Rod_Link_ResourcePack` und ist komplett freiwillig. Ohne Pack sehen die Angeln normal aus. Die Texturen stammen von Thorny Devil Studio.
 
-### 🔓 Rute entlinken
+Das Plugin setzt beim Verlinken je nach Namen ein Custom Model Data. Der Name wird nur beim Verlinken geprüft, späteres Umbenennen ändert nichts mehr.
 
-**Methode 1: Einholen**
-```
-1. Werfe die verlinkte Rute aus
-2. Ziehe die Angelrute ein (rechtsklick halten)
-3. Platte wird freigegeben
-4. Rute erhält Haltbarkeitspönale (Mehrweg)
-   oder wird zerstört (Single-Use)
-```
+| Name enthält (Groß-/Kleinschreibung egal) | Custom Model Data | Aussehen |
+|---|---|---|
+| `stasis` | 1001 | Angel mit Enderperle |
+| `tnt`, `orbital`, `snapshot`, `nuke`, `stabshot` | 1002 | Angel mit TNT |
+| `trap`, `falle` | 1003 | Angel mit Redstone |
 
-**Methode 2: Crafting-Gitter**
-```
-1. Öffne Crafting-Gitter (E)
-2. Platziere verlinkte Rute alleine im Gitter
-3. Rute wird automatisch gereinigt
-4. Kein Haltbarkeitsverlust, keine Zerstörung
-```
+Beim Entlinken wird das Custom Model Data wieder entfernt. Mehr dazu in [RESOURCEPACK_STATUS.md](RESOURCEPACK_STATUS.md).
 
 ---
 
 ## ⚙️ Konfiguration
 
-**Datei:** `plugins/RodLink/config.yml`
+`plugins/RodLink/config.yml`:
 
 ```yaml
-# ═══════════════════════════════════════════════
-# 🎣 RodLink Plugin Konfiguration
-# ═══════════════════════════════════════════════
+debug: false              # ausführliche Konsolen-Ausgaben
+durability_penalty: 10    # Haltbarkeitsverlust beim Entlinken über Benutzen
 
-# 🐛 Debug-Modus für Konsolen-Ausgaben
-debug: false
-
-# 💔 Haltbarkeitsverlust pro normaler Entlinkung (Mehrweg-Ruten)
-#    Single-Use Ruten werden unabhängig davon zerstört
-durability_penalty: 10
-
-# ✨ Partikel-Einstellungen
 particles:
-  # Partikeleffekte aktivieren/deaktivieren
-  enabled: true
-  
-  # Sichtradius für Spieler (in Blöcken)
-  # Partikel werden nur erzeugt, wenn ein Spieler im Radius ist
-  radius: 10.0
+  enabled: true           # Partikel an verlinkten Platten
+  radius: 10.0            # nur sichtbar, wenn ein Spieler in diesem Umkreis ist
 
-# 💬 System-Nachrichten (MiniMessage-Format)
-# Unterstützt Farben: <green>, <red>, <gold>, <aqua>, etc.
-messages:
-  linked_success: "<green>[Stasis] Druckplatte erfolgreich verlinkt!"
-  link_broken: "<red>[Stasis] Verlinkung wurde getrennt (Ziel nicht gefunden)."
+messages:                 # MiniMessage-Format
+  linked_success: "<green>[RodLink] Druckplatte erfolgreich verlinkt!"
+  link_broken: "<red>[RodLink] Verlinkung wurde getrennt (Ziel nicht gefunden)."
+  already_linked: "<red>[RodLink] Diese Druckplatte ist bereits verlinkt."
 ```
+
+Beim Update wird eine bestehende `config.yml` nicht automatisch ergänzt. Fehlende Nachrichten nutzen dann einen Standardtext. Du kannst die Einträge aber von Hand nachtragen.
 
 ---
 
-## 🏗️ Technische Architektur
+## 🧪 Teststand
 
-### Manager-System
-```
-┌─────────────────────────────────────────────┐
-│       PlayerFishListener (Main)              │
-│  ↙              ↓              ↘             │
-RodDataManager  PressurePlateManager  AnchorManager
-  (Datenspeicherung)  (Signal-Kontrolle)  (Entity-Verwaltung)
-```
+Version 1.0.1, alles auf einem Testserver mit Paper 26.2.
 
-- **RodDataManager** - Verwaltet Verlinkungsdaten im ItemMeta (PDC)
-- **PressurePlateManager** - Steuert Redstone-Signal und alle Listener
-- **AnchorManager** - Erstellt/entfernt Marker-ArmorStands
-- **ShimmerParticleTask** - Periodischer Task für Partikeleffekte (alle 0,5s)
-
-### Sicherheitsfeatures
-✅ Chunk-Ticket-System während Entlinkung  
-✅ Crash-Sicherheit durch Fallback-Entity-Suche  
-✅ Physics-Event-Blockierung  
-✅ Entity-Interaktions-Blockierung  
-✅ Anti-Exploit-Validierung im Crafting-Gitter  
+| Was | Stand |
+|---|---|
+| Verlinken und Entlinken, alle Druckplattentypen, Signalstärke 15 | ✅ getestet |
+| Platte abbauen, während sie verlinkt ist | ✅ getestet |
+| Entlinken über das Crafting-Gitter | ✅ getestet |
+| Mehrere Angeln auf einer Platte, Angel in Haupt- oder Nebenhand | ✅ getestet |
+| Custom Model Data setzen und zurücksetzen, Resource Pack | ✅ getestet |
+| Server-Neustart (Verlinkung bleibt erhalten) | ✅ getestet |
+| Entlinken bei weit entfernter, nicht geladener Platte | ⚠️ noch nicht getestet |
+| Nether und End | ⚠️ lief in 1.0.0, in 1.0.1 nicht erneut getestet |
+| Andere Minecraft-/Paper-Versionen | ⚠️ nicht getestet (gebaut gegen Paper-API 1.20.6) |
 
 ---
 
-## 📝 Versionskompatibilität
+## 🐛 Bekannte Einschränkungen
 
-| Version | Status | Getestet | Notizen |
-|---------|--------|----------|---------|
-| **Paper 26.2** | ✅ Stabil | Ja | Vollständig kompatibel |
-| **Ältere Versionen** | ❌ Nicht getestet | Nein | Kompatibilität nicht garantiert |
-| **Java 21** | ✅ Empfohlen | Ja | Compilation erfolgreich |
-
-> ⚠️ **Wichtig**: Das Plugin wurde auf **Paper 26.2** entwickelt und getestet. Kompatibilität mit älteren Versionen ist **nicht garantiert**. Bitte testet das Plugin in eurer Umgebung.
-
----
-
-## 🐛 Bekannte Issues & Roadmap
-
-### v1.0.0 (Aktuell)
-| Status | Issue | Notizen |
-|--------|-------|---------|
-| ✅ | Basis-Verlinkung | Stabil |
-| ✅ | Entlinkung | Stabil |
-| ✅ | Single-Use Ruten | Stabil |
-| ✅ | Partikeleffekte | Stabil |
-| ⚠️ | Nether/End | Seltene Chunk-Load-Probleme |
-
-### Geplant für v1.1.0
-- 🔄 Nether/End-Kompatibilität verbessern
-- 📊 Erweiterte Debug-Befehle
-- 🎨 Zusätzliche Partikeltypen
-- 📡 Optionale Plugin-Integrationen
-
-### Zukünftig (v2.0.0+)
-- 🎯 Multilink-Unterstützung
-- 🌍 Multi-Welt-Systeme
-- 💾 Optionale Datenbankpersistenz
-- 🔧 Erweiterte Ruten-Typen
-
----
-
-## 🎮 Gameplay-Beispiele
-
-### 📍 Beispiel 1: Stasis-Teleport mit Enderperle
-```
-Angelrute "Stasis" auf Druckplatte werfen
-                    ↓
-        Zurückziehen = Verlinkung aktiv
-                    ↓
-    Redstone-Signal triggert Enderperle-Dispenser
-                    ↓
-    Spieler wird beim Zurückziehen teleportiert
-```
-
-**Anwendung**: Quest-basierte Teleportation, Map-Challenges, Event-Trigger
-
----
-
-### 🚪 Beispiel 2: Tür-Auslösung via Angel-Mechanik
-```
-[1]     Angel auf Druckplatte werfen
-                    ↓
-        Zurückziehen = Tür öffnet sich
-                    ↓
-          Redstone-Signal aktiviert
-                    ↓
-      Pistolenschussventil öffnet Tür
-                    ↓
-            Rute wird zerstört
-```
-
-**Anwendung**: Adventure-Maps, Puzzle-Mechaniken, Event-Trigger, Questbelohnungen
+- Geht eine verlinkte Angel verloren (Tod, Lava, Kiste weggeworfen), bleibt die Platte an, bis man sie abbaut. Beim Abbauen wird alles sauber aufgeräumt.
+- Geplant: Beim Verlinken warnen, wenn die Angel beim Entlinken zerbrechen würde (mit Hinweis auf das Crafting-Gitter).
+- Idee, noch offen: Entlinken ohne Haltbarkeitsverlust, wenn man in der Nähe der Platte ist.
+- Offene Fehler und Verbesserungen stehen in den [Issues](../../issues). Änderungen findest du im [Changelog](CHANGELOG.md).
 
 ---
 
 ## 👥 Credits
 
-### 🖥️ Programmierung & Development
-**EinMensch002**
-- Plugin-Architektur & Core-Mechaniken
-- Manager-System
-- Event-Handling & Redstone-Logik
-- Testing & Optimization
+- **EinMensch002**: Plugin und Code
+- **Thorny Devil Studio**: Texturen für das Resource Pack
 
-### 🎨 Ressourcen & Design
-**Thorny Devil Studio**
-- Custom Texturen & Modelle
-- Ressource Pack Design
-- Visual Effects & Branding
-- Asset Creation
-
----
-
-## 🤝 Support & Kontakt
-
-### 📬 Probleme gefunden?
-- **[Issues](../../issues)** - Bug Reports & Feature Requests
-- **[Discussions](../../discussions)** - Fragen & Community
-
-### 🔗 Links
-- **Repository**: [EinMensch002/Rod_Link](https://github.com/EinMensch002/Rod_Link)
-- **Changelog**: [CHANGELOG.md](CHANGELOG.md)
-- **Ressource Pack Status**: [RESOURCEPACK_STATUS.md](RESOURCEPACK_STATUS.md)
+Das Projekt ist Public Domain (Unlicense, siehe [LICENSE](LICENSE)). Jeder darf mitarbeiten und den Code für beliebige Zwecke verwenden. Repository: [EinMensch002/Rod_Link](https://github.com/EinMensch002/Rod_Link)
 
 ---
 
 ## 📊 Projekt-Status
 
-![Development](https://img.shields.io/badge/Status-Stable-brightgreen?style=flat-square)
-![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Beta-yellow?style=flat-square)
+![Version](https://img.shields.io/badge/Version-1.0.1-blue?style=flat-square)
 ![Tested On](https://img.shields.io/badge/Tested%20On-Paper%2026.2-green?style=flat-square)
-![Open Source](https://img.shields.io/badge/Open%20Source-Weißer%20Code-white?style=flat-square)
-
----
-
-<div align="center">
-
-### 🎣 Viel Spaß mit RodLink! ✨
-
-![Made with Java](https://img.shields.io/badge/Made%20with-Java-orange?style=flat-square)
-![Paper API](https://img.shields.io/badge/Paper-API-red?style=flat-square)
-![Minecraft](https://img.shields.io/badge/Minecraft-26.2-green?style=flat-square)
-
-**[⬆ Nach oben](#-RodLink---fishing-rod-link-plugin)**
-
-</div>

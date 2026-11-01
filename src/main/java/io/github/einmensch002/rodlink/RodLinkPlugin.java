@@ -1,12 +1,12 @@
 
-package de.example.plugin;
+package io.github.einmensch002.rodlink;
 
-import de.example.plugin.listener.PlayerFishListener;
-import de.example.plugin.listener.PrepareItemCraftListener;
-import de.example.plugin.manager.AnchorManager;
-import de.example.plugin.manager.PressurePlateManager;
-import de.example.plugin.manager.RodDataManager;
-import de.example.plugin.task.ShimmerParticleTask;
+import io.github.einmensch002.rodlink.listener.PlayerFishListener;
+import io.github.einmensch002.rodlink.listener.PrepareItemCraftListener;
+import io.github.einmensch002.rodlink.manager.AnchorManager;
+import io.github.einmensch002.rodlink.manager.PressurePlateManager;
+import io.github.einmensch002.rodlink.manager.RodDataManager;
+import io.github.einmensch002.rodlink.task.ShimmerParticleTask;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,14 +28,17 @@ public final class RodLinkPlugin extends JavaPlugin {
 
         // Initialisierung der Manager
         this.rodDataManager = new RodDataManager(this);
-        this.pressurePlateManager = new PressurePlateManager(this);
         this.anchorManager = new AnchorManager(this);
+        this.pressurePlateManager = new PressurePlateManager(this, this.anchorManager);
 
         // Registrierung der Event-Listener
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this.pressurePlateManager, this);
         pm.registerEvents(new PlayerFishListener(this, this.rodDataManager, this.pressurePlateManager, this.anchorManager), this);
-        pm.registerEvents(new PrepareItemCraftListener(this, this.rodDataManager), this);
+        pm.registerEvents(new PrepareItemCraftListener(this, this.rodDataManager, this.pressurePlateManager), this);
+
+        // Verlinkungen aus vorhandenen Ankern wiederherstellen und Aufräum-Prüfung starten
+        this.pressurePlateManager.start();
 
         // Start des Schimmer-Partikel-Tasks (Start-Delay: 20 Ticks, Period: 10 Ticks / 0.5s)
         new ShimmerParticleTask(this, this.pressurePlateManager).runTaskTimer(this, 20L, 10L);

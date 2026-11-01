@@ -1,5 +1,5 @@
 
-package de.example.plugin.manager;
+package io.github.einmensch002.rodlink.manager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -26,6 +26,10 @@ public class RodDataManager {
     private final NamespacedKey keyZ;
     private final NamespacedKey keyArmorStandUuid;
     private final NamespacedKey keySingleUse;
+
+    /** Bereich der Custom-Model-Data-Werte, die dieses Plugin vergibt (Stasis, Orbital/Nuke, Trap). */
+    private static final int MODEL_MIN = 1001;
+    private static final int MODEL_MAX = 1003;
 
     public RodDataManager(@NotNull Plugin plugin) {
         this.keyWorldUuid = new NamespacedKey(plugin, "rod_world_uuid");
@@ -144,5 +148,18 @@ public class RodDataManager {
             meta.getPersistentDataContainer().remove(keyArmorStandUuid);
             meta.getPersistentDataContainer().remove(keySingleUse);
         });
+    }
+
+    /**
+     * Entfernt das von diesem Plugin vergebene Custom Model Data, damit die Angel wieder das Standardmodell zeigt.
+     * Fremde Werte (außerhalb von 1001-1003) bleiben unberührt.
+     */
+    public void resetLinkModel(@NotNull ItemMeta meta) {
+        if (meta.hasCustomModelData()) {
+            int value = meta.getCustomModelData();
+            if (value >= MODEL_MIN && value <= MODEL_MAX) {
+                meta.setCustomModelData(null);
+            }
+        }
     }
 }

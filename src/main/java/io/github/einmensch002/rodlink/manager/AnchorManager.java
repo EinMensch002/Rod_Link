@@ -1,5 +1,4 @@
-
-package de.example.plugin.manager;
+package io.github.einmensch002.rodlink.manager;
 
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -9,7 +8,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -53,41 +51,35 @@ public class AnchorManager {
     }
 
     /**
-     * Entfernt den Stasis-Anker ArmorStand sauber aus der Welt.
-     * Nutzt bei Fehlschlagen von getEntity (z. B. nach Server-Restart) eine Chunk-Prüfung und Umkreissuche.
+     * Entfernt alle Stasis-Anker, die exakt auf dem Block der angegebenen Druckplatte liegen.
+     * Der Chunk muss bereits geladen sein (er wird hier bewusst NICHT geladen).
+     * Anker werden über ihre Block-Koordinaten gefunden, damit Anker benachbarter Platten unberührt bleiben.
      *
-     * @param world      Die Welt, in der sich der Anker befindet.
-     * @param anchorUuid Die UUID des gesuchten ArmorStands (kann null sein).
-     * @param location   Die Location der verlinkten Druckplatte.
+     * @param plate Block-Location der Druckplatte.
+     * @return Anzahl der entfernten Anker.
      */
-    public void removeAnchor(@NotNull World world, @Nullable UUID anchorUuid, @NotNull Location location) {
-        // 1. Primärer Versuch über direkte UUID-Abfrage
-        if (anchorUuid != null) {
-            Entity entity = world.getEntity(anchorUuid);
+    public int removeAnchorsAt(@NotNull Location plate) {
+        World world = plate.getWorld();
+        if (world == null || !world.isChunkLoaded(plate.getBlockX() >> 4, plate.getBlockZ() >> 4)) {
+            debugLog("Chunk an " + plate + " ist nicht geladen. Anker-Entfernung übersprungen.");
+            return 0;
+        }
+
+        int removed = 0;
+        for (Entity entity : world.getNearbyEntities(plate, 1.5, 1.5, 1.5)) {
             if (entity instanceof ArmorStand stand && isStasisAnchor(stand)) {
-                stand.remove();
-                debugLog("Anker-ArmorStand über UUID (" + anchorUuid + ") erfolgreich entfernt.");
-                return;
+                Location standLoc = stand.getLocation();
+                if (standLoc.getBlockX() == plate.getBlockX()
+                    && standLoc.getBlockY() == plate.getBlockY()
+                    && standLoc.getBlockZ() == plate.getBlockZ()) {
+                    stand.remove();
+                    removed++;
+                }
             }
         }
 
-        // 2. Fallback: Chunk-Ladestatus prüfen & Umkreissuche durchführen
-        if (!world.isChunkLoaded(location.getChunk())) {
-            debugLog("Chunk an " + location + " ist aktuell nicht geladen. Entfernung übersprungen.");
-            return;
-        }
-
-        var nearbyEntities = world.getNearbyEntities(location, 1.5, 1.5, 1.5);
-        for (Entity entity : nearbyEntities) {
-            if (entity instanceof ArmorStand stand && isStasisAnchor(stand)) {
-                UUID removedUuid = stand.getUniqueId();
-                stand.remove();
-                debugLog("Anker-ArmorStand über Fallback-Umkreissuche an " + location + " entfernt [UUID: " + removedUuid + "].");
-                return;
-            }
-        }
-
-        debugLog("Kein aktiver Stasis-Anker ArmorStand an Location " + location + " gefunden.");
+        debugLog(removed + " Stasis-Anker an " + plate + " entfernt.");
+        return removed;
     }
 
     /**
